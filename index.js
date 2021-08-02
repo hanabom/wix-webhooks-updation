@@ -1,9 +1,9 @@
 // Once add a new item on DB, find duplicate and remove
 
-const { hanabomObj } = require("./hanabomObj");
-const { uploadHanabom, getHanabom, putHanabom } = require("./hanabomAPI");
-const helpers = require("./helpers");
-const { dbAction, dbEnd } = require("./db");
+// const { hanabomObj } = require("./hanabomObj");
+// const { uploadHanabom, getHanabom, putHanabom } = require("./hanabomAPI");
+// const helpers = require("./helpers");
+// const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
   // Get Wix Created Item and Upload on Hanabom
