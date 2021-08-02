@@ -69,28 +69,23 @@ const convertImageURL = async (uriList) => {
   return output;
 };
 
-const defaultProduct = {
-  slug: "",
-  productOptions: {},
-  trackInventory: true,
-  additionalInfoSections: [],
-  collections: [],
-  quantityInStock: 0,
-};
-
-const hanabomObj = async (eventData, ProductObj) => {
+const hanabomObj = async (ProductObj) => {
   //optimize obj for formatting
   // const hanabomAttributes = await getHanabom("attributes");
-  const { name, price, sku, discountedPrice, mediaItems } = eventData;
 
   const {
+    name,
+    price,
+    sku,
+    discountedPrice,
+    mediaItems,
     slug,
     productOptions,
     trackInventory,
     additionalInfoSections,
     collections,
     quantityInStock,
-  } = ProductObj.length > 0 ? ProductObj[0] : defaultProduct;
+  } = ProductObj[0];
   const productOptionKeys = Object.keys(productOptions);
   let images = { images: [] };
 

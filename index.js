@@ -1,37 +1,44 @@
 // Once add a new item on DB, find duplicate and remove
 
 const { hanabomObj } = require("./hanabomObj");
-// const { uploadHanabom, getHanabom, putHanabom } = require("./hanabomAPI");
-// const helpers = require("./helpers");
-// const { dbAction, dbEnd } = require("./db");
+const { updateHanabom } = require("./hanabomAPI");
+const helpers = require("./helpers");
+const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
   // Get Wix Created Item and Upload on Hanabom
+  // const { eventData, dbData } = event.body;
   const { eventData, dbData } = JSON.parse(event.body);
   console.log("dbData:", dbData);
   console.log("eventData:", eventData);
   const visibleCheck = eventData.updatedFields.filter(
     (field) => field === "visible"
   );
-  console.log("visibleCheck:", visibleCheck);
 
-  // const updatedData = visibleCheck.length > 0 ? await hanabomObj(eventData, dbData) :
+  const objGenerator = async (data, visible) => {
+    if (visible.length > 0 && data.length === 0) {
+      return { status: "private" };
+    } else if (data.length > 0) {
+      return await hanabomObj(dbData);
+    }
+  };
 
-  // const product = await hanabomObj(eventData, dbData);
-  // const updateData = await uploadHanabom(product[0], "");
+  const objectResult = await objGenerator(dbData, visibleCheck);
+  console.log("objectResult:", objectResult);
 
-  // const newProduct = await putHanabom(updateData.id, product[1]);
-  // const newDesc = helpers.imgToHtml(newProduct);
-  // putHanabom(updateData.id, newDesc);
+  // Find from db
+  const WixID = eventData.productId;
+  const sql = `SELECT * FROM products WHERE wixId = "${WixID}";`;
+  console.log("sql:", sql);
 
-  // Store on db
-  // const hanaID = updateData.id;
-  // const WixID = eventData._id;
-  // const prodName = product[0].name;
-  // const sql = helpers.sql(hanaID, WixID, prodName);
+  dbAction(sql, (results) => {
+    let sqlData = results;
+    console.log("sql data:", sqlData[0].hanaId);
+    updateHanabom(sqlData[0].hanaId, objectResult);
 
-  // dbAction(sql, (sqlData) => sqlData);
-  // dbEnd();
+    return sqlData;
+  });
+  dbEnd();
 
   // TODO implement
   const response = {

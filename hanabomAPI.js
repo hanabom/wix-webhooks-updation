@@ -15,6 +15,12 @@ const uploadHanabom = (newProduct, param1) => {
   );
 };
 
+const updateHanabom = (param1, updateData) => {
+  return WooCommerce.putAsync("products" + param1, updateData).then((result) =>
+    JSON.parse(result.toJSON().body)
+  );
+};
+
 const getHanabom = () => {
   return WooCommerce.getAsync("products/").then((result) =>
     JSON.parse(result.toJSON().body)
@@ -27,4 +33,4 @@ const putHanabom = (param1, data) => {
   );
 };
 
-module.exports = { uploadHanabom, getHanabom, putHanabom };
+module.exports = { uploadHanabom, getHanabom, putHanabom, updateHanabom };
