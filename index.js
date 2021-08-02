@@ -10,8 +10,12 @@ const handler = async (event) => {
   const { eventData, dbData } = JSON.parse(event.body);
   console.log("dbData:", dbData);
   console.log("eventData:", eventData);
+  const visibleCheck = eventData.updatedFields.filter(
+    (field) => field === "visible"
+  );
+  console.log("visibleCheck:", visibleCheck);
 
-  // const product = await hanabomObj(eventData, dbData);
+  const product = await hanabomObj(eventData, dbData);
   // const updateData = await uploadHanabom(product[0], "");
 
   // const newProduct = await putHanabom(updateData.id, product[1]);
