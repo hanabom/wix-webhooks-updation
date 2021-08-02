@@ -1,6 +1,6 @@
 // Once add a new item on DB, find duplicate and remove
 
-// const { hanabomObj } = require("./hanabomObj");
+const { hanabomObj } = require("./hanabomObj");
 // const { uploadHanabom, getHanabom, putHanabom } = require("./hanabomAPI");
 // const helpers = require("./helpers");
 // const { dbAction, dbEnd } = require("./db");
@@ -15,7 +15,9 @@ const handler = async (event) => {
   );
   console.log("visibleCheck:", visibleCheck);
 
-  const product = await hanabomObj(eventData, dbData);
+  // const updatedData = visibleCheck.length > 0 ? await hanabomObj(eventData, dbData) :
+
+  // const product = await hanabomObj(eventData, dbData);
   // const updateData = await uploadHanabom(product[0], "");
 
   // const newProduct = await putHanabom(updateData.id, product[1]);
