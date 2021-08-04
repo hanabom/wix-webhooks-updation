@@ -28,8 +28,6 @@ const handler = async (event) => {
     updateHanabom(sqlData[0].hanaId, objectResult[0]);
   });
 
-  dbEnd();
-
   // TODO implement
   const response = {
     statusCode: 200,
