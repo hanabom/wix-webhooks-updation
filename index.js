@@ -7,7 +7,7 @@ const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
   // Get Wix Created Item and Upload on Hanabom
-  // const { eventData, dbData } = event.body;
+
   const { eventData, dbData } = JSON.parse(event.body);
   console.log("dbData:", dbData);
   console.log("eventData:", eventData);
