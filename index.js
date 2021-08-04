@@ -2,7 +2,7 @@
 
 const { hanabomObj } = require("./hanabomObj");
 const { updateHanabom } = require("./hanabomAPI");
-const helpers = require("./helpers");
+const { objGenerator } = require("./helpers");
 const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
