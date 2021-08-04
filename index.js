@@ -6,22 +6,13 @@ const helpers = require("./helpers");
 const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
+  console.log("event:", event);
   // Get Wix Created Item and Upload on Hanabom
   // const { eventData, dbData } = event.body;
   const { eventData, dbData } = JSON.parse(event.body);
-  console.log("dbData:", dbData);
-  console.log("eventData:", eventData);
   const visibleCheck = eventData.updatedFields.filter(
     (field) => field === "visible"
   );
-
-  const objGenerator = async (data, visible) => {
-    if (visible.length > 0 && data.length === 0) {
-      return { status: "private" };
-    } else if (data.length > 0) {
-      return await hanabomObj(dbData);
-    }
-  };
 
   const objectResult = await objGenerator(dbData, visibleCheck);
   console.log("objectResult:", objectResult);

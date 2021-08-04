@@ -1,3 +1,5 @@
+const { hanabomObj } = require("./hanabomObj");
+
 const imgToHtml = (product) => {
   let descHTML;
 
@@ -18,4 +20,12 @@ const imgToHtml = (product) => {
 const sql = (WixID) =>
   `SELECT * FROM products.products WHERE wixId = ${WixID};`;
 
-module.exports = { imgToHtml, sql };
+const objGenerator = async (data, visible) => {
+  if (visible.length > 0 && data.length === 0) {
+    return { status: "private" };
+  } else if (data.length > 0) {
+    return await hanabomObj(dbData);
+  }
+};
+
+module.exports = { imgToHtml, sql, objGenerator };
