@@ -21,10 +21,13 @@ const updateHanabom = (param1, updateData) => {
   );
 };
 
-const getHanabom = () => {
-  return WooCommerce.getAsync("products/").then((result) =>
-    JSON.parse(result.toJSON().body)
-  );
+const getHanabom = (param1 = "attributes") => {
+  const qtyInPage = 100;
+  let APILink = param1 == null ? "products" : "products/" + param1;
+
+  return WooCommerce.getAsync(APILink + "?per_page=" + qtyInPage)
+    .then((response) => JSON.parse(response.toJSON().body))
+    .catch((error) => console.log(error.response.data));
 };
 
 const putHanabom = (param1, data) => {

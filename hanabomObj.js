@@ -1,4 +1,5 @@
-// import { getHanabom } from './hanabomAPI.js';
+import { getHanabom } from "./hanabomAPI.js";
+const { categoryIdFinder } = require("./category");
 // import { uploadHanabom, putHanabom } from './hanabomAPI.js';
 
 let newProduct = {
@@ -58,6 +59,11 @@ let newProduct = {
   stock_status: "",
 };
 
+const findId = (name, targetArray) => {
+  const result = targetArray.filter((item) => item.name === name);
+  return result[0].id;
+};
+
 const convertImageURL = async (uriList) => {
   let output = [];
 
@@ -71,7 +77,7 @@ const convertImageURL = async (uriList) => {
 
 const hanabomObj = async (ProductObj) => {
   //optimize obj for formatting
-  // const hanabomAttributes = await getHanabom("attributes");
+  const hanabomAttributes = await getHanabom("attributes");
 
   const {
     name,
@@ -117,55 +123,41 @@ const hanabomObj = async (ProductObj) => {
   newProduct.on_sale = price == discountedPrice ? false : true;
   newProduct.manage_stock = trackInventory;
   newProduct.stock_quantity = quantityInStock || null;
+
   collections.forEach((element) => {
-    newProduct.categories.push({ name: element.name });
+    const categoryData = categoryIdFinder(element.name);
+
+    const dataForEnter = categoryData
+      ? categoryData
+      : [{ id: 0, name: "undefined" }];
+    dataForEnter.forEach((category) =>
+      newProduct.categories.push({ id: category.id })
+    );
   });
-  newProduct.categories = [
-    {
-      id: 56,
-    },
-    {
-      id: 259,
-    },
-    {
-      id: 50,
-    },
-    {
-      id: 222,
-    },
-    {
-      id: 223,
-    },
-  ];
+
   convertImageURL(mediaItems).then((img) => {
     images.images.push(...img);
   });
 
-  // productOptionKeys.forEach((key) => {
-  //   //.replace(/\s/g, '')
-  //   const attributeId = findId(key, hanabomAttributes);
-  //   const choices = productOptions[key].choices.map(
-  //     (option) => option.description
-  //   );
-  //   let template = {
-  //     id: attributeId,
-  //     name: key,
-  //     position: 0,
-  //     visible: true,
-  //     variation: true,
-  //     options: [...choices],
-  //   };
-  //   newProduct.attributes.push(template);
-  // });
+  productOptionKeys.forEach((key) => {
+    //.replace(/\s/g, '')
+    const attributeId = findId(key, hanabomAttributes);
+    const choices = productOptions[key].choices.map(
+      (option) => option.description
+    );
+    let template = {
+      id: attributeId,
+      name: key,
+      position: 0,
+      visible: true,
+      variation: true,
+      options: [...choices],
+    };
+    newProduct.attributes.push(template);
+  });
 
   return [newProduct, images];
-  // return [newProduct];
 };
-
-function findId(name, targetArray) {
-  const result = targetArray.filter((item) => item.name === name);
-  return result[0].id;
-}
 
 // export function regroupVariants(item){
 //     let att = item.attributes;
