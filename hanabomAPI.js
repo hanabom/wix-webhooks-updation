@@ -19,7 +19,7 @@ const uploadHanabom = (newProduct, param1) => {
 
 const updateHanabom = (param1, updateData) => {
   console.log("updateData:", updateData);
-  return WooCommerce.putAsync("products/" + param1, updateData]).then(
+  return WooCommerce.putAsync("products/" + param1, updateData).then(
     (result) => {
       console.log("result.toJSON().body", result.toJSON().body);
       JSON.parse(result.toJSON().body);
