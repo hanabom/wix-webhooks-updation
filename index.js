@@ -26,9 +26,10 @@ const handler = async (event) => {
     console.log("sql data:", sqlData[0].hanaId);
     updateHanabom(sqlData[0].hanaId, objectResult[0]);
 
+    dbEnd();
+
     return sqlData;
   });
-  dbEnd();
 
   // TODO implement
   const response = {
