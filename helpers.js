@@ -24,7 +24,7 @@ const objGenerator = async (data, visible) => {
   if (visible.length > 0 && data.length === 0) {
     return { status: "private" };
   } else if (data.length > 0) {
-    return await hanabomObj(dbData);
+    return await hanabomObj(data);
   }
 };
 
