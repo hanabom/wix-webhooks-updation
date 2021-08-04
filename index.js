@@ -8,8 +8,8 @@ const { dbAction, dbEnd } = require("./db");
 const handler = async (event) => {
   console.log("event:", event);
   // Get Wix Created Item and Upload on Hanabom
-  // const { eventData, dbData } = event.body;
-  const { eventData, dbData } = JSON.parse(event.body);
+  const { eventData, dbData } = event.body;
+  // const { eventData, dbData } = JSON.parse(event.body);
   const visibleCheck = eventData.updatedFields.filter(
     (field) => field === "visible"
   );
@@ -25,7 +25,7 @@ const handler = async (event) => {
   dbAction(sql, (results) => {
     let sqlData = results;
     console.log("sql data:", sqlData[0].hanaId);
-    updateHanabom(sqlData[0].hanaId, objectResult);
+    updateHanabom(sqlData[0].hanaId, objectResult[0]);
 
     return sqlData;
   });
