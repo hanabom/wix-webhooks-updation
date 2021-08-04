@@ -1,4 +1,4 @@
-import { getHanabom } from "./hanabomAPI.js";
+const { getHanabom } = require("./hanabomAPI.js");
 const { categoryIdFinder } = require("./category");
 // import { uploadHanabom, putHanabom } from './hanabomAPI.js';
 
