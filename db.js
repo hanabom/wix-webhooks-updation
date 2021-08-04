@@ -13,11 +13,11 @@ dbConn.connect((err) => {
   if (err) throw err;
   console.log("MySql connected...");
 
-  return dbConn.query("SELECT * FROM products", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    return result;
-  });
+  // return dbConn.query("SELECT * FROM products", function (err, result, fields) {
+  //   if (err) throw err;
+  //   console.log(result);
+  //   return result;
+  // });
 });
 
 const dbAction = (sql, callback) => {
@@ -25,6 +25,7 @@ const dbAction = (sql, callback) => {
     if (err) {
       throw err;
     }
+    console.log(results);
     return callback(results);
   });
 };
