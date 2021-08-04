@@ -2,26 +2,17 @@
 
 const { hanabomObj } = require("./hanabomObj");
 const { updateHanabom } = require("./hanabomAPI");
-const helpers = require("./helpers");
+const { objGenerator } = require("./helpers");
 const { dbAction, dbEnd } = require("./db");
 
 const handler = async (event) => {
+  console.log("event:", event);
   // Get Wix Created Item and Upload on Hanabom
 
   const { eventData, dbData } = JSON.parse(event.body);
-  console.log("dbData:", dbData);
-  console.log("eventData:", eventData);
   const visibleCheck = eventData.updatedFields.filter(
     (field) => field === "visible"
   );
-
-  const objGenerator = async (data, visible) => {
-    if (visible.length > 0 && data.length === 0) {
-      return { status: "private" };
-    } else if (data.length > 0) {
-      return await hanabomObj(dbData);
-    }
-  };
 
   const objectResult = await objGenerator(dbData, visibleCheck);
   console.log("objectResult:", objectResult);
@@ -29,16 +20,16 @@ const handler = async (event) => {
   // Find from db
   const WixID = eventData.productId;
   const sql = `SELECT * FROM products WHERE wixId = "${WixID}";`;
-  console.log("sql:", sql);
 
   dbAction(sql, (results) => {
     let sqlData = results;
     console.log("sql data:", sqlData[0].hanaId);
-    updateHanabom(sqlData[0].hanaId, objectResult);
+    updateHanabom(sqlData[0].hanaId, objectResult[0]);
+
+    dbEnd();
 
     return sqlData;
   });
-  dbEnd();
 
   // TODO implement
   const response = {
