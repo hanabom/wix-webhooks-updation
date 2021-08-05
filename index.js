@@ -21,13 +21,14 @@ const handler = async (event) => {
   const WixID = eventData.productId;
   const sql = `SELECT * FROM products WHERE wixId = "${WixID}";`;
 
-  dbAction(sql, (result) => {
-    let sqlData = result;
+  dbAction(sql, (results) => {
+    let sqlData = results;
     console.log("sql data:", sqlData[0].hanaId);
-    // updateHanabom(sqlData[0].hanaId, objectResult[0]);
+    updateHanabom(sqlData[0].hanaId, objectResult[0]);
   });
-  
-  
+
+  dbEnd();
+
   // TODO implement
   const response = {
     statusCode: 200,
