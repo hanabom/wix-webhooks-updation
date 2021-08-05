@@ -36,6 +36,6 @@ const dbAction = (sql, callback) => {
   // });
 };
 
-const dbEnd = () => dbConn.end();
+// const dbEnd = () => dbConn.end();
 
-module.exports = { dbAction, dbEnd };
+module.exports = { dbAction };
