@@ -21,14 +21,19 @@ dbConn.connect((err) => {
 });
 
 const dbAction = (sql, callback) => {
-  console.log("within DBAction ");
-  dbConn.query(sql, function (err, results) {
-    if (err) {
-      throw err;
-    }
-    console.log(results);
-    return callback(results);
+  console.log(sql);
+  dbConn.query("SELECT * FROM products", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    return callback(result);
   });
+  // dbConn.query(sql, function (err, results) {
+  //   if (err) {
+  //     throw err;
+  //   }
+  //   console.log(results);
+  //   return callback(results);
+  // });
 };
 
 const dbEnd = () => dbConn.end();

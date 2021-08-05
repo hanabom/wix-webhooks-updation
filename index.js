@@ -21,10 +21,10 @@ const handler = async (event) => {
   const WixID = eventData.productId;
   const sql = `SELECT * FROM products WHERE wixId = "${WixID}";`;
 
-  dbAction(sql, (results) => {
-    let sqlData = results;
+  dbAction(sql, (result) => {
+    let sqlData = result;
     console.log("sql data:", sqlData[0].hanaId);
-    updateHanabom(sqlData[0].hanaId, objectResult[0]);
+    // updateHanabom(sqlData[0].hanaId, objectResult[0]);
   });
   
   dbEnd();
