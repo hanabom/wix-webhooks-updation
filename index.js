@@ -21,14 +21,12 @@ const handler = async (event) => {
   const WixID = eventData.productId;
   const sql = `SELECT * FROM products WHERE wixId = "${WixID}";`;
 
-  console.log("If this shows up, I give up")
   dbAction(sql, (results) => {
     let sqlData = results;
     console.log("sql data:", sqlData[0].hanaId);
     updateHanabom(sqlData[0].hanaId, objectResult[0]);
   });
-
-  console.log("in between db actoin and end ")
+  
   dbEnd();
   
   // TODO implement

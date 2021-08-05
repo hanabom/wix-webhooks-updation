@@ -13,14 +13,15 @@ dbConn.connect((err) => {
   if (err) throw err;
   console.log("MySql connected...");
 
-  return dbConn.query("SELECT * FROM products", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-    return result;
-  });
+  // return dbConn.query("SELECT * FROM products", function (err, result, fields) {
+  //   if (err) throw err;
+  //   console.log(result);
+  //   return result;
+  // });
 });
 
 const dbAction = (sql, callback) => {
+  console.log("within DBAction ");
   dbConn.query(sql, function (err, results) {
     if (err) {
       throw err;
